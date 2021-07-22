@@ -138,5 +138,18 @@ useEffect(() => {
   }, [])
 ```
 
-# Trigger de S3
+Comprobamos en el payload a que grupos pertenece el usuario, especificamente si pertence al grupo _Admin_:
 
+```js
+  //Si el estaod esta informado, comprobamos si el usuario pertenece al grupo Admin
+  if (user.signInUserSession) {
+    const { signInUserSession: { idToken: { payload } } }: usuario = user
+    console.log('payload: ', payload)
+
+    if (payload['cognito:groups'] &&payload['cognito:groups'].includes('Admin')) {
+      isAdmin = true
+    }
+  }
+```
+
+# Trigger de S3
