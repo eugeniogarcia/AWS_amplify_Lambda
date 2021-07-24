@@ -67,6 +67,7 @@ function App() {
       //Nos quedamos con el nomreb del fichero
       const filetype = file.name.split('.')[file.name.split.length - 1]
       
+      //Usamos la api de aws para subir la imagen a S3
       await Storage.put(`${uuid()}.${filetype}`, file)
       /* Once the file is uploaded, fetch the list of images */
       fetchImages()

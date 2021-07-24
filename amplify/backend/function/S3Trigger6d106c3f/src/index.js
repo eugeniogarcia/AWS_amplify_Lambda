@@ -37,6 +37,6 @@ exports.handler = async function (event, context) { //eslint-disable-line
     }
   }
   catch (err) {
-    context.fail(`Error getting files: ${err}`);
+    context.fail(`Error recuperando ficheros: ${err}`);
   }
 };

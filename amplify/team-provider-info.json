@@ -132,7 +132,7 @@
         },
         "S3Trigger6d106c3f": {
           "deploymentBucketName": "amplify-lambdatriggerexample-envdos-72504-deployment",
-          "s3Key": "amplify-builds/S3Trigger6d106c3f-442b43577a595a4c3067-build.zip"
+          "s3Key": "amplify-builds/S3Trigger6d106c3f-464264527a4d726f314f-build.zip"
         }
       }
     }

@@ -257,3 +257,101 @@ Nuestro lambda utiliza un par de librerías. Tendremos que actualizar el _packag
   }
 ```
 
+
+## Aplicación
+
+En primer lugar protegemos la aplicación:
+
+```js
+export default withAuthenticator(App)
+```
+
+Definimos un estado con los datos del usuario, y específicamente guardamos el payload asociado al principal de cada usuario:
+
+```js
+type usuario = { 
+  signInUserSession: 
+  { 
+    idToken: 
+    { 
+      payload:any 
+    }
+  } |null
+} 
+
+const estadoinicial:usuario={
+  signInUserSession:null
+}
+
+
+function App() {
+  const [user, updateUser] = useState(estadoinicial)
+```
+
+Cuando se pinta la app actualizamos el estado usando la api _auth de amplify_:
+
+```js
+  useEffect(() => {
+    Auth.currentAuthenticatedUser()
+      .then(user => updateUser(user))
+      .catch(err => console.log(err));
+  }, [])
+```
+
+Comprobamos si el usuario pertenece o no al grupo de _Admin_:
+
+```js
+  if (user.signInUserSession) {
+    const { signInUserSession: { idToken: { payload } } }: usuario = user
+    console.log('payload: ', payload)
+
+    if (payload['cognito:groups'] && payload['cognito:groups'].includes('Admin')) {
+      isAdmin = true
+    }
+  }
+```
+
+Definimos otro estado en el que guardar la lista de imagenes. Las imagenes se guardan condificadas en base64:
+
+```js
+const [images, setImages] = useState([] as string[])
+```
+
+Actualizamos el estado en dos momentos. Al pintar la app:
+
+```js
+async function fetchImages() {
+    //Recupera todas las imagenes del bucket
+    const files:{key:string}[] = await Storage.list('')
+    //Para cada imagen del bucket... 
+    const signedFiles:string[] = await Promise.all(files.map(async file => {
+      //...recuperamos el contenido de la imagen
+      const signedFile = await Storage.get(file.key)
+      return signedFile as string
+    }))
+    //Guardamos el contenido de todas las imagenes en el estado
+    setImages(signedFiles)
+  }
+
+  useEffect(() => {
+    fetchImages()
+  }, [])
+```
+
+El otro momento en el que actualizamos el estado es despues de subir una imagen al bucket de S3:
+
+```js
+async function onChange(e: ChangeEvent<HTMLInputElement>) {
+    //Obtiene el nombre del archivo
+    const file = e.target.files?e.target.files[0]:null;
+    if(file){
+      //Nos quedamos con el nomreb del fichero
+      const filetype = file.name.split('.')[file.name.split.length - 1]
+      
+      //Usamos la api de aws para subir la imagen a S3
+      await Storage.put(`${uuid()}.${filetype}`, file)
+      /* Once the file is uploaded, fetch the list of images */
+      fetchImages()
+    }
+  }
+```
