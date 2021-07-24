@@ -48,5 +48,93 @@
         }
       }
     }
+  },
+  "nuevoint": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-lambdatriggerexample-nuevoint-70038-authRole",
+      "UnauthRoleArn": "arn:aws:iam::483497128006:role/amplify-lambdatriggerexample-nuevoint-70038-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::483497128006:role/amplify-lambdatriggerexample-nuevoint-70038-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-lambdatriggerexample-nuevoint-70038-deployment",
+      "UnauthRoleName": "amplify-lambdatriggerexample-nuevoint-70038-unauthRole",
+      "StackName": "amplify-lambdatriggerexample-nuevoint-70038",
+      "StackId": "arn:aws:cloudformation:eu-west-2:483497128006:stack/amplify-lambdatriggerexample-nuevoint-70038/ec7baf60-eb72-11eb-815a-0a8e67e79298",
+      "AmplifyAppId": "d2dy5p24qb104l"
+    },
+    "categories": {
+      "auth": {
+        "lambdatriggerexample1ba1d38c": {}
+      },
+      "function": {
+        "lambdatriggerexample1ba1d38cPostConfirmation": {
+          "GROUP": "Admin",
+          "deploymentBucketName": "amplify-lambdatriggerexample-nuevoint-70038-deployment",
+          "s3Key": "amplify-builds/lambdatriggerexample1ba1d38cPostConfirmation-74677169426969346844-build.zip"
+        },
+        "S3Trigger470f6a59": {}
+      }
+    }
+  },
+  "envprimero": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-lambdatriggerexample-envprimero-71532-authRole",
+      "UnauthRoleArn": "arn:aws:iam::483497128006:role/amplify-lambdatriggerexample-envprimero-71532-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::483497128006:role/amplify-lambdatriggerexample-envprimero-71532-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-lambdatriggerexample-envprimero-71532-deployment",
+      "UnauthRoleName": "amplify-lambdatriggerexample-envprimero-71532-unauthRole",
+      "StackName": "amplify-lambdatriggerexample-envprimero-71532",
+      "StackId": "arn:aws:cloudformation:eu-west-2:483497128006:stack/amplify-lambdatriggerexample-envprimero-71532/01c0ddd0-eb75-11eb-be1b-024af8d095b2",
+      "AmplifyAppId": "d2dy5p24qb104l"
+    },
+    "categories": {
+      "auth": {
+        "lambdatriggerexample1ba1d38c": {}
+      },
+      "function": {
+        "lambdatriggerexample1ba1d38cPostConfirmation": {
+          "GROUP": "Admin",
+          "deploymentBucketName": "amplify-lambdatriggerexample-envprimero-71532-deployment",
+          "s3Key": "amplify-builds/lambdatriggerexample1ba1d38cPostConfirmation-74677169426969346844-build.zip"
+        },
+        "S3Trigger470f6a59": {}
+      }
+    }
+  },
+  "envdos": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-lambdatriggerexample-envdos-72504-authRole",
+      "UnauthRoleArn": "arn:aws:iam::483497128006:role/amplify-lambdatriggerexample-envdos-72504-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::483497128006:role/amplify-lambdatriggerexample-envdos-72504-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-lambdatriggerexample-envdos-72504-deployment",
+      "UnauthRoleName": "amplify-lambdatriggerexample-envdos-72504-unauthRole",
+      "StackName": "amplify-lambdatriggerexample-envdos-72504",
+      "StackId": "arn:aws:cloudformation:eu-west-2:483497128006:stack/amplify-lambdatriggerexample-envdos-72504/581b6230-eb76-11eb-8ce4-0a35e769796a",
+      "AmplifyAppId": "d3jh6mp96jshp5"
+    },
+    "categories": {
+      "auth": {
+        "lambdatriggerexample1ba1d38c": {},
+        "lambdatriggerexampleb1890cf5": {}
+      },
+      "function": {
+        "lambdatriggerexample1ba1d38cPostConfirmation": {
+          "GROUP": "Admin",
+          "deploymentBucketName": "amplify-lambdatriggerexample-envdos-72504-deployment",
+          "s3Key": "amplify-builds/lambdatriggerexample1ba1d38cPostConfirmation-74677169426969346844-build.zip"
+        },
+        "S3Trigger470f6a59": {},
+        "lambdatriggerexampleb1890cf5PostConfirmation": {
+          "GROUP": "Admin",
+          "deploymentBucketName": "amplify-lambdatriggerexample-envdos-72504-deployment",
+          "s3Key": "amplify-builds/lambdatriggerexampleb1890cf5PostConfirmation-4544523635487a6e4d65-build.zip"
+        },
+        "S3Trigger6d106c3f": {
+          "deploymentBucketName": "amplify-lambdatriggerexample-envdos-72504-deployment",
+          "s3Key": "amplify-builds/S3Trigger6d106c3f-442b43577a595a4c3067-build.zip"
+        }
+      }
+    }
   }
 }

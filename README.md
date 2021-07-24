@@ -153,3 +153,107 @@ Comprobamos en el payload a que grupos pertenece el usuario, especificamente si 
 ```
 
 # Trigger de S3
+
+Creamos el servicio de S3:
+
+```ps
+amplify add storage
+```
+
+Elegimos la opción de _Content_ para crear el servicio de almacenamiento con S3 - la otra alternativa habría sido NoSQL, para DynamoDB. Además de pedirnos cual es el nombre del bucket, tendremos que especificar:
+- Si admitimos usuarios autenticados, o autenticados y guests
+- Que operaciones pueden hacer usuarios autenticados y guests
+- Si crear una lambda asociada al bucket
+
+## Lambda
+
+Usaremos las siguientes librerías:
+- sharp. Para manejar imagenes
+- aws-sdk. La API de AWS
+
+```js
+// Import the sharp library
+const sharp = require('sharp')
+const aws = require('aws-sdk')
+const s3 = new aws.S3()
+```
+
+La lambda tiene la firma habitual:
+
+```js
+exports.handler = async function (event, context) { //eslint-disable-line
+  console.log('Received S3 event:', JSON.stringify(event, null, 2));
+```
+
+Podemos acceder al evento. Por ejemplo, si se trata de un borrado de un objeto - imagen -, no hacemos nada
+```js
+  // If the event type is delete, return from the function
+  if (event.Records[0].eventName === 'ObjectRemoved:Delete') return
+```
+
+Accedemos al bucket y la key:
+
+```js
+  // Next, we get the bucket name and the key from the event.
+  const BUCKET = event.Records[0].s3.bucket.name
+  const KEY = event.Records[0].s3.object.key
+```
+
+Usamos la API de AWS para acceder al bucket, y procesar el objeto como una imagen:
+
+```js
+  try {
+    // Fetch the image data from S3
+    let image = await s3.getObject({ Bucket: BUCKET, Key: KEY }).promise()
+    image = await sharp(image.Body)
+```
+
+En nuestro caso nos interesa actualizar la imagen si el tamaño es mayor a 1000:
+
+```js
+    // Get the metadata from the image, including the width and the height
+    const metadata = await image.metadata()
+    if (metadata.width > 1000) {
+```
+
+Lo que haremos entonces es dimensionar la imagen:
+
+```js
+      // If the width is greater than 1000, the image is resized
+      const resizedImage = await image.resize({ width: 1000 }).toBuffer()
+```
+
+y actualizar el bucket con la imagen manipulada:
+
+```js
+      await s3.putObject({
+        Bucket: BUCKET,
+        Body: resizedImage,
+        Key: KEY
+      }).promise()
+     
+      return
+    } 
+    else {
+      return
+    }
+  }
+  catch (err) {
+    context.fail(`Error getting files: ${err}`);
+  }
+};
+```
+
+## Librerias
+
+Nuestro lambda utiliza un par de librerías. Tendremos que actualizar el _package.json_, pero el _package.json_ de la función. En nuestro caso lo podemos encontrar en `\AWS_amplify_Lambda\amplify\backend\function\S3Trigger470f6a59\src\`. Añadimos la dependencia, y un script para que _Cloudformation_ instale la dependencia cuando se cree la lambda:
+
+```json
+  "scripts": {
+    "install": "npm install --arch=x64 --platform=linux --target=10.15.0 sharp"
+  },
+  "dependencies": {
+    "sharp": "^0.23.2"
+  }
+```
+
